@@ -1,32 +1,45 @@
 """ 
 ssppg - A simple and secure Python password generator. 
 """
-# TODO: Look into cryptographically secure PRNG.
 
 import platform
 import string
 import random
 import sys
 
-def generate_password(length, chars):
+def generate_password(length, chars, shuffle_iterations):
+    """
+    Generates a secure password
+
+    Args:
+        length (int): The length of the password
+        chars (str): The characters that can be used in the password
+    """
+
     password = ""
+
+    """
+    SystemRandom() uses /dev/urandom as a source for random numbers.
+    /dev/urandom is cryptographically secure: www.2uo.de/myths-about-urandom
+    """
+    rand = random.SystemRandom()
+
+    for i in range(shuffle_iterations):
+        rand.shuffle(chars)
+
     for i in range(length):
-        c = random.choice(chars)
+        c = rand.choice(chars)
         password += c
 
     return password
         
 def main():
     shuffle_iterations = 100
-    password_len = 50
+    password_len = 70
 
     numbers = [str(i) for i in range(0,10)]
     all_chars = list(string.ascii_letters + string.punctuation) + numbers
-
-    for i in range(shuffle_iterations):
-        random.shuffle(all_chars)
-
-    password = generate_password(password_len, all_chars)
+    password = generate_password(password_len, all_chars, shuffle_iterations)
     print(password)
 
 if __name__ == '__main__':
