@@ -2,19 +2,11 @@
 ssppg - A simple and secure Python password generator. 
 """
 # TODO: Look into cryptographically secure PRNG.
-# TODO: Implement "weight" for different kinds of characters,
-#       if you want more numbers than letters for example.
 
 import platform
 import string
 import random
 import sys
-
-def pre_run():
-    if platform.system() == "Windows":
-        raise OSError("This program only works on Linux systems.")
-
-    # TODO: Check if entropy_avail is low
 
 def generate_password(length, chars):
     password = ""
@@ -25,8 +17,6 @@ def generate_password(length, chars):
     return password
         
 def main():
-    pre_run()
-
     shuffle_iterations = 100
     password_len = 50
 
