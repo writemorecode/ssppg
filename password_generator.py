@@ -2,6 +2,7 @@
 ssppg - A simple and secure Python password generator. 
 """
 
+import argparse
 import platform
 import string
 import random
@@ -34,8 +35,12 @@ def generate_password(length, chars, shuffle_iterations):
     return password
         
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-l", "--length", help="How long the generated password should be.", type=int, required=True)
+    args = parser.parse_args()
+
     shuffle_iterations = 100
-    password_len = 70
+    password_len = args.length
 
     numbers = [str(i) for i in range(0,10)]
     all_chars = list(string.ascii_letters + string.punctuation) + numbers
